@@ -124,6 +124,7 @@ cran_packages="\
     rbokeh \
     visNetwork \
     reticulate \
+    formatR \
 "
 
 github_packages="\
