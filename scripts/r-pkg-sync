@@ -1,0 +1,136 @@
+#!/usr/bin/env Rscript
+# vim: set syntax=r:
+
+library(methods)
+
+# Load required libraries, install them if they don't exist.
+#   devtools
+#   optparse
+#   tidyverse
+#   BiocInstaller
+
+required.pkgs <- c('devtools','optparse','tidyverse')
+
+for (pkg in required.pkgs) {
+  if (!require(pkg, character.only=TRUE)) {
+    install.packages(pkg,repos=c('http://cran.wustl.edu/'))
+    library(pkg, character.only=TRUE)
+  }
+}
+
+if (!require(BiocInstaller)) {
+  source("http://bioconductor.org/biocLite.R")
+  biocLite("BiocInstaller")
+}
+
+
+# do.install
+# 
+# Install a package using the source and version details.
+#
+# This function accepts a 1 row tibble and using the information
+# from the columns to decide where to download the R package from
+# and which version to download. The tibble should have the
+# following columns:
+#   package_name   - name of the package
+#   version_max    - version of the package to install
+#   source_type    - one of cran, github, bioc
+#   source_details - usually the url of the source or repository
+#
+# Notes:
+# could try using get(var.with.fxn.name)()
+# to call a function with the name stored in a variable
+
+do.install <- function(row) {
+
+  message(paste("Start processing package: ",row$package_name))
+
+  rv <- tryCatch (
+    {
+      if (row$source_type == "cran") {
+        if (is.na(row$version_max)) {
+          devtools::install_cran(row$package_name, repos=row$source_details)
+        } else {
+          devtools::install_version(
+            row$package_name,
+            version=row$version_max,
+            repos=row$source_details)
+        }
+      } else if (row$source_type == "github") {
+        devtools::install_github(row$source_details)
+      } else if (row$source_type == "bioclite") {
+        devtools::install_bioc(row$package_name)
+      } else {
+        print(paste("Error while attempting to install", row$package_name,
+                    " invalid source_type:", row$source_type))
+      }
+      TRUE
+    },
+    error = function(e) {
+      message(paste("Package install failure:",row$package_name))
+      message(e)
+      return(FALSE)
+    },
+    warning = function(w) {
+      return(FALSE)
+    },
+    finally = {
+      message(paste("End processing package:",row$package_name))
+    }
+  )
+
+  return(rv)
+}
+
+
+# install.missing.packages
+# 
+# Install missing packages from a user provided tibble
+#
+# This function accepts a tibble of package data and iterates over
+# the rows, attempting to install the packages missing from the
+# system.
+# 
+# The tibble should have the following columns:
+#   package_name   - name of the package
+#   version_max    - version of the package to install
+#   source_type    - one of cran, github, bioc
+#   source_details - usually the url of the source or repository
+#
+
+install.missing.packages <- function(packages.df) {
+
+  # figure out which packages are missing
+  missing.pkgs <- packages.df %>%
+                    filter(!(package_name %in% installed.packages()[,"Package"]))
+
+  print("Installing the following missing packages:")
+  print(missing.pkgs$package_name)
+
+  # iterate over the missing packages and install them in order
+  by(missing.pkgs, seq_len(nrow(missing.pkgs)), do.install)
+  
+}
+
+
+usage <- "Usage: %prog [options]\n"
+description <- "r-package-manager - sync installed R packages"
+option_list <- list(
+  make_option(c("-p","--packagelist"),
+              type="character",
+              default="r_package_list.csv",
+              help="csv file with package names, versions, repository source")
+);
+epilogue <- "" 
+
+opt_parser <- OptionParser(usage = usage,
+                           option_list = option_list,
+                           description = description,
+                           epilogue = epilogue);
+arguments <- parse_args(opt_parser, positional_arguments = 0);
+opt <- arguments$options
+args <- arguments$args
+
+packages.df <- read_csv(opt$packagelist)
+
+install.missing.packages(packages.df)

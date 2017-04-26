@@ -9,16 +9,16 @@ set -x
 # Fail script on error.
 set -e
 
-pkgname=R
-VERSION=3.2.5
+pkgname=jags
+VERSION=4.2.0
 basedir=/apps/share64/debian7
 environdir=${basedir}/environ.d
 pkginstalldir=${basedir}/${pkgname}
 tarinstalldir=${pkginstalldir}/tars
 installprefix=${pkginstalldir}/${VERSION}
-tarfilebase=R-${VERSION}
+tarfilebase=JAGS-${VERSION}
 tarfilename=${tarfilebase}.tar.gz
-downloaduri=https://cran.r-project.org/src/base/R-3/${tarfilename}
+downloaduri=https://downloads.sourceforge.net/project/mcmc-jags/JAGS/4.x/Source/${tarfilename}
 script=$(readlink -f ${0})
 installdir=$(dirname ${script})
 
@@ -32,51 +32,32 @@ if [[ ! -e ${tarfilename} ]] ; then
 fi
 tar xvzf ${tarfilename}
 cd ${tarfilebase}
-./configure --enable-R-shlib \
-            --prefix=${installprefix} \
-            --with-tcltk \
-            --with-cairo
+./configure --prefix=${installprefix}
 make clean
-make all
-make check
+make
 make install
 
 if [[ ! -d ${environdir} ]] ; then
     mkdir -p ${environdir}
 fi
 
-
 cat <<- _END_ > ${environdir}/${pkgname}-${VERSION}
-conflict R_CHOICE
+conflict JAGS_CHOICE
 
-desc "R is a system for statistical computation and graphics. It consists of a language plus a run-time environment with graphics, a debugger, access to certain system functions, and the ability to run programs stored in script files."
+desc "JAGS is Just Another Gibbs Sampler. It is a program for the statistical analysis of Bayesian hierarchical models by Markov Chain Monte Carlo."
 
-help "https://cran.r-project.org"
+help "http://mcmc-jags.sourceforge.net/"
 
 version=${VERSION}
 location=${pkginstalldir}/\${version}
 
-setenv R_HOME \${location}/lib/R
-
-setenv R_LIBS \$R_HOME/library
 prepend PATH \${location}/bin
-
 prepend MANPATH \${location}/man
+prepend LD_LIBRARY_PATH \${location}/lib
+
+setenv JAGS_INCLUDE \${location}/include
+setenv JAGS_LIBS \${location}/lib
+setenv JAGS_HOME \${location}
 
 tags MATHSCI
 _END_
-
-
-# Don't fail on use commands.
-set +e
-
-# setup the R environment
-source /etc/environ.sh
-use -e -r R-${VERSION}
-# use -e -r jags-4.2.0
-
-# Fail script on error.
-set -e
-
-# install packages
-${installdir}/r-pkg-sync --packagelist ${installdir}/r-${VERSION}-package_list.csv

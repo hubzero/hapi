@@ -8,6 +8,8 @@
 # jags for rjags
 # libv8-3.14-dev for rmapshaper
 # libprotobuf-dev for geojson
+# libpango1.0
+# libpango1.0-dev for Rmarkdown, knitR
 
 
 # show commands being run
