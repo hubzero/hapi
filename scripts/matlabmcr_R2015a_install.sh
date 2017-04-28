@@ -50,7 +50,7 @@ desc "MATLAB MCR ${VERSION}"
 help "http://www.mathworks.com/products/compiler/mcr/"
 
 version=${VERSION}
-location=${pkginstalldir}/\${version}/v84
+location=${pkginstalldir}/\${version}/v85
 
 prepend LD_LIBRARY_PATH \${location}/runtime/glnxa64:\${location}/bin/glnxa64:\${location}/sys/os/glnxa64
 
