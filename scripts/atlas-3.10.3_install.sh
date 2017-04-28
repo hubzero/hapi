@@ -4,7 +4,6 @@
 set -x
 
 source /etc/environ.sh
-use -e -r cmake-3.7.2
 
 # Fail script on error.
 set -e
