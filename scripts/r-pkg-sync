@@ -133,4 +133,4 @@ args <- arguments$args
 
 packages.df <- read_csv(opt$packagelist)
 
-install.missing.packages(packages.df)
+status <- install.missing.packages(packages.df)
