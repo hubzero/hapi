@@ -1,24 +1,21 @@
 #! /bin/bash
 
-# this needs the following debian packages:
-#   libpango1.0-dev
-
 # show commands being run
 set -x
 
 # Fail script on error.
 set -e
 
-pkgname=jags
-VERSION=4.2.0
+pkgname=gdal
+VERSION=2.1.3
 basedir=/apps/share64/debian7
 environdir=${basedir}/environ.d
 pkginstalldir=${basedir}/${pkgname}
 tarinstalldir=${pkginstalldir}/tars
 installprefix=${pkginstalldir}/${VERSION}
-tarfilebase=JAGS-${VERSION}
+tarfilebase=${pkgname}-${VERSION}
 tarfilename=${tarfilebase}.tar.gz
-downloaduri=https://downloads.sourceforge.net/project/mcmc-jags/JAGS/4.x/Source/${tarfilename}
+downloaduri=http://download.osgeo.org/gdal/${VERSION}/${tarfilename}
 script=$(readlink -f ${0})
 installdir=$(dirname ${script})
 
@@ -42,22 +39,22 @@ if [[ ! -d ${environdir} ]] ; then
 fi
 
 cat <<- _END_ > ${environdir}/${pkgname}-${VERSION}
-conflict JAGS_CHOICE
+conflict GDAL_CHOICE
 
-desc "JAGS is Just Another Gibbs Sampler. It is a program for the statistical analysis of Bayesian hierarchical models by Markov Chain Monte Carlo."
+desc "A translator library for raster and vector geospatial data formats"
 
-help "http://mcmc-jags.sourceforge.net/"
+help "http://www.gdal.org/"
 
 version=${VERSION}
 location=${pkginstalldir}/\${version}
 
-prepend PATH \${location}/bin
-prepend MANPATH \${location}/man
+setenv GDAL_INCLUDE_DIR \${location}/include
+setenv GDAL_LIB_DIR \${location}/lib
+setenv GDAL_DATA \${location}/share/gdal
+
 prepend LD_LIBRARY_PATH \${location}/lib
+prepend PATH \${location}/bin
 
-setenv JAGS_INCLUDEDIR \${location}/include
-setenv JAGS_LIBDIR \${location}/lib
-setenv JAGS_PREFIX \${location}
 
-tags MATHSCI
+tags DEVEL
 _END_
