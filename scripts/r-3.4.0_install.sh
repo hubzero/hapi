@@ -61,12 +61,16 @@ help "https://cran.r-project.org"
 version=${VERSION}
 location=${pkginstalldir}/\${version}
 
-setenv R_HOME \${location}/lib/R
+# The following variables are set by R
+#   R_HOME
+#   R_INCLUDE_DIR
+#   R_LIBS
+# More info here:
+# https://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html
 
-setenv R_LIBS \$R_HOME/library
 prepend PATH \${location}/bin
-
-prepend MANPATH \${location}/man
+prepend LD_LIBRARY_PATH \${location}/lib/R
+prepend MANPATH \${location}/share/man
 
 tags MATHSCI
 _END_
