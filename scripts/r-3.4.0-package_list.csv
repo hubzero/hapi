@@ -101,6 +101,7 @@ reticulate,,,cran,http://cran.wustl.edu/
 formatR,,,cran,http://cran.wustl.edu/
 Rcpp,,,cran,http://cran.wustl.edu/
 RInside,,,cran,http://cran.wustl.edu/
+cairoDevice,,,cran,http://cran.wustl.edu/
 d3scatter,,,github,jcheng5/d3scatter
 leaflet,,,github,rstudio/leaflet
 trelliscopejs,,,github,hafen/trelliscopejs
