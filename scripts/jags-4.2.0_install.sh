@@ -54,6 +54,7 @@ location=${pkginstalldir}/\${version}
 prepend PATH \${location}/bin
 prepend MANPATH \${location}/man
 prepend LD_LIBRARY_PATH \${location}/lib
+prepend PKG_CONFIG_PATH \${location}/lib/pkgconfig
 
 setenv JAGS_INCLUDEDIR \${location}/include
 setenv JAGS_LIBDIR \${location}/lib

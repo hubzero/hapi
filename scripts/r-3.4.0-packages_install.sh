@@ -18,7 +18,6 @@ rversion=3.4.0
 # setup the R environment
 source /etc/environ.sh
 use -e -r R-${rversion}
-use -e -r jags-4.2.0
 use -e -r gdal-2.1.3
 
 # Fail script on error.
@@ -26,10 +25,6 @@ set -e
 
 script=$(readlink -f ${0})
 installdir=$(dirname ${script})
-
-# setup PKG_CONFIG_PATH for rjags knows where to
-# find jags.pc in our local, updated version of jags
-export PKG_CONFIG_PATH=${JAGS_LIBDIR}/pkgconfig
 
 # install packages
 ${installdir}/r-pkg-sync --packagelist ${installdir}/r-${rversion}-package_list.csv
