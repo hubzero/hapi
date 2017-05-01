@@ -69,7 +69,7 @@ location=${pkginstalldir}/\${version}
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html
 
 prepend PATH \${location}/bin
-prepend LD_LIBRARY_PATH \${location}/lib/R
+prepend LD_LIBRARY_PATH \${location}/lib/R/lib
 prepend MANPATH \${location}/share/man
 
 tags MATHSCI
