@@ -55,6 +55,7 @@ rgeos,,,cran,http://cran.wustl.edu/
 classInt,,,cran,http://cran.wustl.edu/
 shiny,,,cran,http://cran.wustl.edu/
 shinydashboard,,,cran,http://cran.wustl.edu/
+shinyjs,,,cran,http://cran.wustl.edu/
 colorspace,,,cran,http://cran.wustl.edu/
 Cairo,,,cran,http://cran.wustl.edu/
 maxlike,,,cran,http://cran.wustl.edu/
@@ -100,6 +101,8 @@ rbokeh,,,cran,http://cran.wustl.edu/
 visNetwork,,,cran,http://cran.wustl.edu/
 reticulate,,,cran,http://cran.wustl.edu/
 formatR,,,cran,http://cran.wustl.edu/
+parallel,,,cran,http://cran.wustl.edu/
+proxy,,,cran,http://cran.wustl.edu/
 d3scatter,,,github,jcheng5/d3scatter
 leaflet,,,github,rstudio/leaflet
 trelliscopejs,,,github,hafen/trelliscopejs
