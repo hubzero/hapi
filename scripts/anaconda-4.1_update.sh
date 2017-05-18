@@ -1,6 +1,7 @@
 #! /bin/bash
 
 # Update anaconda2-4.1, anaconda3-4.1, jupyter and example notebooks
+# Run this when there have been changes to the jupyter packages or examples.
 
 # show commands being run
 set -x
