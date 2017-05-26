@@ -1,6 +1,9 @@
 #! /bin/bash
 
-# Install anaconda2-4.1, anaconda3-4.1, jupyter and example notebooks
+# Install anaconda2-4.1, anaconda3-4.1, jupyter and example notebooks.
+# Run this, then test it by "use -e anaconda2-4.1; start_jupyter" from
+# a workspace or ssh session.  You will need to install the "jupyter"
+# tool to allow users to access it.
 
 # show commands being run
 set -x
@@ -11,7 +14,7 @@ set -e
 pkgname=anaconda
 VERSION=4.1
 
-# where to install
+# Where to install.  SHould this be different for different OSes?
 basedir=/apps/share64/debian7
 
 pkginstalldir=${basedir}/${pkgname}/${VERSION}
@@ -26,7 +29,7 @@ if [[ ! -d ${pkginstalldir} ]] ; then
 fi
 cd ${pkginstalldir}
 
-# checkout notebook_setup
+# Checkout notebook_setup script
 if [[ ! -e "jupyter_notebook_setup" ]] ; then
     git clone https://github.com/hubzero/jupyter_notebook_setup.git
 else
@@ -45,12 +48,16 @@ else
 fi
 
 # now install and configure anaconda2, anaconda3 and jupyter
+# For now we are using the nanohub configuration.  Hub-specific
+# configuration are possible.
+
 ./jupyter_notebook_setup/jpkg install nano_4.1
 
 if [[ ! -d ${environdir} ]] ; then
     mkdir -p ${environdir}
 fi
 
+# anaconda2 env file
 cat <<- _END_ > ${environdir}/${pkgname}2-${VERSION}
 conflict ANACONDA_CHOICE
 
@@ -67,6 +74,7 @@ tags MATHSCI
 _END_
 
 
+# anaconda3 env file
 cat <<- _END_ > ${environdir}/${pkgname}3-${VERSION}
 conflict ANACONDA_CHOICE
 
