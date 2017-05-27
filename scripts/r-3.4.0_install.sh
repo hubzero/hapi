@@ -72,5 +72,7 @@ prepend PATH \${location}/bin
 prepend LD_LIBRARY_PATH \${location}/lib/R/lib
 prepend MANPATH \${location}/share/man
 
+setenv R_INSTALL_DIR \${location}
+
 tags MATHSCI
 _END_
