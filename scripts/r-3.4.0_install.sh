@@ -46,10 +46,14 @@ make all
 #make check
 make install
 
+# setup Rprofile.site
+install -D --mode 0444 ${installdir}/Rprofile.site.in ${installprefix}/lib/R/etc/Rprofile.site
+
+
+# setup use script
 if [[ ! -d ${environdir} ]] ; then
     mkdir -p ${environdir}
 fi
-
 
 cat <<- _END_ > ${environdir}/${pkgname}-${VERSION}
 conflict R_CHOICE

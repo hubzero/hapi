@@ -16,6 +16,10 @@ VERSION=4.1
 basedir=/apps/share64/debian7
 
 pkginstalldir=${basedir}/${pkgname}/${VERSION}
+# install dir for anaconda2
+pkginstalldir2=${basedir}/${pkgname}/${pkgname}2-${VERSION}
+# install dir for anaconda3
+pkginstalldir3=${basedir}/${pkgname}/${pkgname}3-${VERSION}
 example_dir=examples-${VERSION}
 environdir=${basedir}/environ.d
 script=$(readlink -f ${0})
@@ -47,6 +51,10 @@ fi
 
 # now install and configure anaconda2, anaconda3 and jupyter
 ./jupyter_notebook_setup/jpkg update nano_4.1
+
+# setup Rprofile.site
+install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir2}/lib/R/etc/Rprofile.site
+install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir3}/lib/R/etc/Rprofile.site
 
 if [[ ! -d ${environdir} ]] ; then
     mkdir -p ${environdir}

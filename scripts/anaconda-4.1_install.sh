@@ -18,6 +18,10 @@ VERSION=4.1
 basedir=/apps/share64/debian7
 
 pkginstalldir=${basedir}/${pkgname}/${VERSION}
+# install dir for anaconda2
+pkginstalldir2=${basedir}/${pkgname}/${pkgname}2-${VERSION}
+# install dir for anaconda3
+pkginstalldir3=${basedir}/${pkgname}/${pkgname}3-${VERSION}
 example_dir=examples-${VERSION}
 environdir=${basedir}/environ.d
 script=$(readlink -f ${0})
@@ -53,6 +57,10 @@ fi
 
 ./jupyter_notebook_setup/jpkg install nano_4.1
 
+# setup Rprofile.site
+install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir2}/lib/R/etc/Rprofile.site
+install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir3}/lib/R/etc/Rprofile.site
+
 if [[ ! -d ${environdir} ]] ; then
     mkdir -p ${environdir}
 fi
@@ -66,9 +74,9 @@ desc "Python distribution for large-scale data processing, predictive analytics,
 help "https://docs.continuum.io/new-anaconda-start-here"
 
 version=${VERSION}
-location=${pkginstalldir}
+location=${pkginstalldir2}
 
-prepend PATH \${location}/anaconda2-\${version}/bin
+prepend PATH \${location}/bin
 
 tags MATHSCI
 _END_
@@ -83,9 +91,9 @@ desc "Python distribution for large-scale data processing, predictive analytics,
 help "https://docs.continuum.io/new-anaconda-start-here"
 
 version=${VERSION}
-location=${pkginstalldir}
+location=${pkginstalldir3}
 
-prepend PATH \${location}/anaconda3-\${version}/bin
+prepend PATH \${location}/bin
 
 tags MATHSCI
 _END_
