@@ -1,0 +1,11 @@
+local({
+ # Set a CRAN mirror
+ # Other repositories that are accessible from the hubzero firewall include:
+ # r["CRAN"] <- "http://cran.revolutionanalytics.com/"
+ # r["CRAN"] <- "https://ftp.ussg.iu.edu/CRAN/"
+ # r["CRAN"] <- "http://cran.wustl.edu/"
+
+ r <- getOption("repos")
+ r["CRAN"] <- "http://cran.wustl.edu/"
+ options(repos = r)
+})
