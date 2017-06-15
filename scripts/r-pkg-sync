@@ -36,6 +36,7 @@ if (!require(BiocInstaller)) {
 #   version_max    - version of the package to install
 #   source_type    - one of cran, github, bioc
 #   source_details - usually the url of the source or repository
+#   install_opts   - additional install options
 #
 # Notes:
 # could try using get(var.with.fxn.name)()
@@ -49,17 +50,25 @@ do.install <- function(row) {
     {
       if (row$source_type == "cran") {
         if (is.na(row$version_max)) {
-          devtools::install_cran(row$package_name, repos=row$source_details)
+          devtools::install_cran(
+            row$package_name,
+            repos=row$source_details,
+            args=row$install_opts)
         } else {
           devtools::install_version(
             row$package_name,
             version=row$version_max,
-            repos=row$source_details)
+            repos=row$source_details,
+            args=row$install_opts)
         }
       } else if (row$source_type == "github") {
-        devtools::install_github(row$source_details)
+        devtools::install_github(
+          row$source_details,
+          args=row$install_opts)
       } else if (row$source_type == "bioclite") {
-        devtools::install_bioc(row$package_name)
+        devtools::install_bioc(
+          row$package_name,
+          args=row$install_opts)
       } else {
         print(paste("Error while attempting to install", row$package_name,
                     " invalid source_type:", row$source_type))
@@ -96,13 +105,15 @@ do.install <- function(row) {
 #   version_max    - version of the package to install
 #   source_type    - one of cran, github, bioc
 #   source_details - usually the url of the source or repository
+#   install_opts   - additional install options
 #
 
 install.missing.packages <- function(packages.df) {
 
   # figure out which packages are missing
   missing.pkgs <- packages.df %>%
-                    filter(!(package_name %in% installed.packages()[,"Package"]))
+                    filter(!(package_name %in% installed.packages()[,"Package"])) %>%
+                    mutate(install_opts = strsplit(install_opts,"\\s+"))
 
   print("Installing the following missing packages:")
   print(missing.pkgs$package_name)
