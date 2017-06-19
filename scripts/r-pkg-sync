@@ -50,29 +50,35 @@ do.install <- function(row) {
     {
       if (row$source_type == "cran") {
         if (is.na(row$version_max)) {
-          devtools::install_cran(
-            row$package_name,
-            repos=row$source_details,
-            args=row$install_opts)
+          f <- devtools::install_cran
+          fargs <- list(row$package_name,
+            repos=row$source_details)
         } else {
-          devtools::install_version(
-            row$package_name,
+          f <- devtools::install_version
+          fargs <- list(row$package_name,
             version=row$version_max,
-            repos=row$source_details,
-            args=row$install_opts)
+            repos=row$source_details)
         }
       } else if (row$source_type == "github") {
-        devtools::install_github(
-          row$source_details,
-          args=row$install_opts)
+        f <- devtools::install_github
+        fargs <- list(row$source_details)
       } else if (row$source_type == "bioclite") {
-        devtools::install_bioc(
-          row$package_name,
-          args=row$install_opts)
+        f <- devtools::install_bioc
+        fargs <- list(row$package_name)
       } else {
         print(paste("Error while attempting to install", row$package_name,
                     " invalid source_type:", row$source_type))
       }
+ 
+      # check for install options
+      if (!is.na(row$install_opts)) {
+        fargs <- list(fargs,args=row$install_opts)
+      }
+
+      # call the install function with the arguments
+      do.call(f,fargs)
+
+      # return true if there was no error
       TRUE
     },
     error = function(e) {
