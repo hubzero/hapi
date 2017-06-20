@@ -19,7 +19,7 @@ rversion=3.4.0
 source /etc/environ.sh
 use -e -r R-${rversion}
 use -e -r gdal-2.1.3
-use -e -r jags-4.2.0
+# use -e -r jags-4.2.0
 
 # Fail script on error.
 set -e
