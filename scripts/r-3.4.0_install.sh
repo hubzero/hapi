@@ -49,6 +49,9 @@ make install
 # setup Rprofile.site
 install -D --mode 0444 ${installdir}/Rprofile.site.in ${installprefix}/lib/R/etc/Rprofile.site
 
+# setup Rlogo-1.png
+install -D --mode 0444 ${installdir}/Rlogo-1.png ${installprefix}/Rlogo-1.png
+
 
 # setup use script
 if [[ ! -d ${environdir} ]] ; then
@@ -77,6 +80,7 @@ prepend LD_LIBRARY_PATH \${location}/lib/R/lib
 prepend MANPATH \${location}/share/man
 
 setenv R_INSTALL_DIR \${location}
+setenv R_LOGO_PATH \${location}/Rlogo-1.png
 
 tags MATHSCI
 _END_
