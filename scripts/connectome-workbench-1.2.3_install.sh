@@ -37,6 +37,13 @@ rm -rf ${tarfilebase}
 tar xvzf ${tarfilename}
 cd ${tarfilebase}/src
 
+# set the OSMESA_DIR so cmake builds an executable with the -show-scene command
+# I thought setting WORKBENCH_MESA_DIR cmake variable would do the same, but
+# I have not gotten this to work.
+export OSMESA_DIR=/usr
+
+#   -D WORKBENCH_MESA_DIR=/usr \
+
 cmake \
    -D CMAKE_INSTALL_PREFIX=${installprefix} \
    -D CMAKE_BUILD_TYPE=Release \
