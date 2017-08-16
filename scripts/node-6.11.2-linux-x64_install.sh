@@ -54,7 +54,7 @@ prepend PATH \${location}/bin
 prepend LD_LIBRARY_PATH \${location}/lib
 prepend MANPATH \${location}/share/man
 
-setenv NODE_LOGO_PATH \${location}/node_logo.png
+setenv NODE_LOGO_PATH \${location}/NodeJs_logo.png
 
 tags DEVEL
 _END_
