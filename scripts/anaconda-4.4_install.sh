@@ -68,7 +68,7 @@ fi
 # For now we are using the nanohub configuration.  Hub-specific
 # configurations are possible.
 
-./jupyter_notebook_setup/jpkg install hub_4.4
+./jupyter_notebook_setup/jpkg install hublight_4.4
 
 # setup Rprofile.site
 install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir2}/lib/R/etc/Rprofile.site
