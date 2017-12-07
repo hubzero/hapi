@@ -1,175 +1,31 @@
 #! /bin/bash
-#
-# install R packages
-# assumes the following debian packages were installed:
-# libcairo2-dev, libxt-dev for Cairo package
-# libpam0g-dev for rstudio server stuff
-# libnetcdf-dev for netcdf, xcms
-# jags for rjags
-# libv8-3.14-dev for rmapshaper
-# libprotobuf-dev for geojson
-# libpango1.0
-# libpango1.0-dev for Rmarkdown, knitR
 
+# this needs the following debian packages:
+#   libnetcdf-dev
+#   libv8-3.14-dev
+#   libproj-dev (needed by rgdal package)
+#   libudunits2-dev (needed by sf package)
+#
+# additional optional packages:
+#   tcl-dev
+#   tk-dev
 
 # show commands being run
 set -x
 
-# Fail script on error.
-#set -e
+rversion=3.2.5
 
-pkgname=R
-VERSION=3.2.5
+# setup the R environment
+source /etc/environ.sh
+use -e -r R-${rversion}
+use -e -r gdal-2.1.3
+# use -e -r jags-4.2.0
+
+# Fail script on error.
+set -e
+
 script=$(readlink -f ${0})
 installdir=$(dirname ${script})
 
-
-
-cran_packages="\
-    MCMCpack \
-    mvtnorm \
-    EbayesThresh \
-    survival \
-    Hmisc \
-    VGAM \
-    cluster \
-    glmnet \
-    igraph \
-    mixOmics \
-    pamr \
-    pls \
-    pvclust \
-    rgl \
-    spls \
-    pwr \
-    dcemriS4 \
-    oro.nifti \
-    oro.dicom \
-    agRee \
-    Agreement \
-    ggplot2 \
-    googleVis \
-    R.matlab \
-    XML \
-    RCurl \
-    deSolve \
-    rootSolve \
-    minpack.lm \
-    MASS \
-    coda \
-    lattice \
-    FME \
-    mnormt \
-    waterData \
-    EcoHydRology \
-    hydroTSM \
-    foreign \
-    reshape \
-    gdata \
-    spdep \
-    spgrass6 \
-    ncdf4 \
-    plyr \
-    maptools \
-    gridExtra \
-    corrplot \
-    systemfit \
-    plm \
-    countrycode \
-    stargazer \
-    msm \
-    rgeos \
-    classInt \
-    shiny \
-    shinydashboard \
-    colorspace \
-    Cairo \
-    maxlike \
-    rgdal \
-    gdalUtils \
-    AUC \
-    pander \
-    dplyr \
-    rmarkdown \
-    optparse \
-    maps \
-    ggmap \
-    hexbin \
-    RColorBrewer \
-    ordinal \
-    pheatmap \
-    proto \
-    ucminf \
-    sqldf \
-    DT \
-    matrixcalc \
-    optimx \
-    plotly \
-    tidyr \
-    viridis \
-    tibble \
-    d3heatmap \
-    flexdashboard \
-    devtools \
-    crosstalk \
-    servr \
-    raster \
-    rmapshaper \
-    tigris \
-    acs \
-    sf \
-    mapview \
-    geojson \
-    geojsonio \
-    tidyverse \
-    gapminder \
-    rbokeh \
-    visNetwork \
-    reticulate \
-    formatR \
-"
-
-github_packages="\
-    jcheng5/d3scatter \
-    rstudio/leaflet \
-    hafen/trelliscopejs \
-"
-
-bioclite_packages="\
-    Biobase \
-    OmicCircos \
-    GEOquery \
-    affy \
-    gpls \
-    hopach \
-    limma \
-    mouse4302cdf \
-    mouse4302.db \
-    xcms \
-"
-
-
-# might need to install libpng12-dev for ggmap package
-
-${installdir}/r-install-pkg.sh -a bootstrap -R ${VERSION}
-
-for cranpkg in ${cran_packages}
-do
-    ${installdir}/r-install-pkg.sh -a install_cran -R ${VERSION} ${cranpkg};
-done
-unset cranpkg
-
-
-for ghpkg in ${github_packages}
-do
-    ${installdir}/r-install-pkg.sh -a install_github -R ${VERSION} ${ghpkg};
-done
-unset ghpkg
-
-
-for biocpkg in ${bioclite_packages}
-do
-    ${installdir}/r-install-pkg.sh -a install_bioc -R ${VERSION} ${biocpkg};
-done
-unset biocpkg
-
+# install packages
+${installdir}/r-pkg-sync --packagelist ${installdir}/r-${rversion}-package_list.csv
