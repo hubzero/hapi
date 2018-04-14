@@ -7,7 +7,7 @@ set -x
 
 source /etc/environ.sh
 use -e -r boost-1.64.0
-use -e -r R-3.4.0
+use -e -r R-3.4.3
 use -e -r cmake-2.8.11.2
 
 # Fail script on error.
@@ -125,7 +125,7 @@ fi
 cat <<- _END_ > ${environdir}/${pkgname}-${VERSION}
 conflict RSTUDIO_SERVER_CHOICE
 
-use -e -r boost-1.62.0
+use -e -r boost-1.64.0
 
 desc "RStudio Server ${VERSION}"
 

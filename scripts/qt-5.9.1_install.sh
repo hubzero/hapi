@@ -18,20 +18,20 @@ script=$(readlink -f ${0})
 installdir=$(dirname ${script})
 cpucount=`cat /proc/cpuinfo | grep processor | wc -l`
 
-#if [[ ! -d ${pkginstalldir}/tars ]] ; then
-#    mkdir -p ${pkginstalldir}/tars
-#fi
+if [[ ! -d ${pkginstalldir}/tars ]] ; then
+    mkdir -p ${pkginstalldir}/tars
+fi
 cd ${pkginstalldir}/tars
-#
-#if [[ ! -e ${tarfilename} ]] ; then
-#    wget ${downloaduri}
-#fi
-#
-#rm -rf ${tarfilebase}
-#tar xvJf ${tarfilename}
+
+if [[ ! -e ${tarfilename} ]] ; then
+    wget ${downloaduri}
+fi
+
+rm -rf ${tarfilebase}
+tar xvJf ${tarfilename}
 cd ${tarfilebase}
-#
-#
+
+
 ## remove the use of the gold linker
 ## using the gold linker when it is not installed will cause
 ## g++ to fail.
