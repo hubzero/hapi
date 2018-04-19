@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# Copyright 2006-2009 by Purdue Research Foundation, West Lafayette, IN 47906.
+# All rights reserved.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License, version 2.1 as published by the Free Software Foundation.
+
+#
+# This is basically like a login(1) process, so we should set the
+# SHELL environment variable here.  SHELL should not be passed in
+# for non-interactive sessions since that may affect how scripts
+# interpret their environment.
+#
+
+version=$(cat $SESSIONDIR/resources | grep version | awk -F' ' '{print $2}')
+if [[ "${version}" == "test" ]]; then
+    version=dev
+else
+    version=current
+fi
+toolbase=/apps/workspace/${version}
+
+SHELL=$(getent passwd $(whoami) | cut -d: -f7)
+export SHELL
+
+[[ -x ${HOME}/.xinitrc ]] && exec ${HOME}/.xinitrc
+[[ -x ${HOME}/.Xsession ]] && exec ${HOME}/.Xsession
+
+#
+# I like there to be scrollbars and be login shells.
+#
+echo "XTerm*scrollBar: true
+XTerm*loginShell: true
+" | xrdb -merge
+
+[[ -e ${HOME}/.Xdefaults ]] && xrdb -merge ${HOME}/.Xdefaults
+
+#
+# Start an initial xterm.
+#
+xterm -geometry +30+30 -ls -sb -title 'Color xterm' &
+
+#
+# Run HUB workspace customization scripts
+#
+
+CUSTOMDIR=${toolbase}/middleware/custom
+
+for i in $(ls ${CUSTOMDIR})
+do
+    if [[ -x ${CUSTOMDIR}/$i ]] ; then
+        ${CUSTOMDIR}/$i
+    fi
+done
+
+# launch hubzero's icewm
+/usr/bin/icewm-hubzero
