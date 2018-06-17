@@ -1,7 +1,7 @@
 #! /bin/bash
 
-# Install anaconda2-4.4, anaconda3-4.4, jupyter and example notebooks.
-# Run this, then test it by "use -e anaconda2-4.4; start_jupyter" from
+# Install anaconda2-5.1, anaconda3-5.1, jupyter, jupyter lab and example notebooks.
+# Run this, then test it by "use -e anaconda3-5.1; start_jupyter" from
 # a workspace or ssh session.  You will need to install the "jupyter"
 # tool to allow users to access it.
 
@@ -56,14 +56,6 @@ else
     cd ..
 fi
 
-# set branch for examples. nanohub has additional examples
-# including Rappture integration.
-if (( `expr match "$host" 'nanoHUB*'` == 7 )) ; then
-    cd ${example_dir}
-    git checkout nanohub
-    cd ..
-fi
-
 # now install and configure anaconda2, anaconda3 and jupyter
 # For now we are using the nanohub configuration.  Hub-specific
 # configurations are possible.
@@ -82,9 +74,9 @@ fi
 cat <<- _END_ > ${environdir}/${pkgname}2-${VERSION}
 conflict ANACONDA_CHOICE
 
-desc "Python distribution for large-scale data processing, predictive analytics, and scientific computing."
+desc "Anaconda® is a package manager, an environment manager, a Python distribution, and a collection of over 1,000+ open source packages.""
 
-help "https://docs.continuum.io/new-anaconda-start-here"
+help "https://docs.anaconda.com/new-anaconda-start-here"
 
 version=${VERSION}
 location=${pkginstalldir2}
@@ -99,9 +91,9 @@ _END_
 cat <<- _END_ > ${environdir}/${pkgname}3-${VERSION}
 conflict ANACONDA_CHOICE
 
-desc "Python distribution for large-scale data processing, predictive analytics, and scientific computing."
+desc "Anaconda® is a package manager, an environment manager, a Python distribution, and a collection of over 1,000+ open source packages.""
 
-help "https://docs.continuum.io/new-anaconda-start-here"
+help "https://docs.anaconda.com/new-anaconda-start-here"
 
 version=${VERSION}
 location=${pkginstalldir3}
