@@ -44,7 +44,7 @@ fi
 
 # if old examples dir exists, create a softlink to it.
 if [[ -e "examples-4.1" ]] ; then
-    ln -s "examples-4.1" ${example_dir}
+    ln -sf "examples-4.1" ${example_dir}
 fi
 
 # checkout example notebooks
