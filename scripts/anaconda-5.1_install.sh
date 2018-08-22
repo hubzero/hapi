@@ -56,11 +56,13 @@ else
     cd ..
 fi
 
-# now install and configure anaconda2, anaconda3 and jupyter
-# For now we are using the nanohub configuration.  Hub-specific
-# configurations are possible.
+# now fetch and install binaries
 
-./jupyter_notebook_setup/jpkg install hublight_${VERSION}
+# only select one of the below!!
+# both python 2 and python 3
+./jupyter_notebook_setup/jpkg netinst 5.1
+# just python3
+#./jupyter_notebook_setup/jpkg --nopy2 netinst 5.1
 
 # setup Rprofile.site
 install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir2}/lib/R/etc/Rprofile.site
