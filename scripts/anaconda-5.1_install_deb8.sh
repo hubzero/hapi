@@ -36,12 +36,12 @@ cd ${pkginstalldir}
 # Checkout notebook_setup script
 if [[ ! -e "jupyter_notebook_setup" ]] ; then
     git clone https://github.com/hubzero/jupyter_notebook_setup.git
-else
-    cd jupyter_notebook_setup
-    git pull
-    git checkout 2a7e14e6aaa430425f35f7c8c7fefd0901599e7b
-    cd ..
 fi
+
+cd jupyter_notebook_setup
+git pull
+git checkout 2a7e14e6aaa430425f35f7c8c7fefd0901599e7b
+cd ..
 
 # if old examples dir exists, create a softlink to it.
 if [[ -e "examples-4.1" ]] ; then
