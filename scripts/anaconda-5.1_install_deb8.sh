@@ -39,7 +39,7 @@ if [[ ! -e "jupyter_notebook_setup" ]] ; then
 else
     cd jupyter_notebook_setup
     git pull
-    git checkout 5.1
+    git checkout 1809e578deb3f22d837b1268e73cad40c256b5fe
     cd ..
 fi
 
