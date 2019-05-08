@@ -16,7 +16,7 @@ tarinstalldir=${pkginstalldir}/tars
 installprefix=${pkginstalldir}/${VERSION}
 tarfilename=${pkgname}-${VERSION}.tar.gz
 tardirbase=${pkgname}-${VERSION}
-downloaduri=https://cmake.org/files/v3.7/${tarfilename}
+downloaduri=https://cmake.org/files/v3.14/${tarfilename}
 environdir=${basedir}/environ.d
 cpucount=`cat /proc/cpuinfo | grep processor | wc -l`
 
