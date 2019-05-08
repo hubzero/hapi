@@ -44,6 +44,7 @@ make clean
 make all
 # TODO: figure out why check fails while testing complex numbers
 #make check
+touch doc/NEWS.pdf
 make install
 
 # setup Rprofile.site
