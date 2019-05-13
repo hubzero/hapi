@@ -40,7 +40,7 @@ fi
 
 cd jupyter_notebook_setup
 git pull
-git checkout 2a7e14e6aaa430425f35f7c8c7fefd0901599e7b
+git checkout 5.1
 cd ..
 
 # if old examples dir exists, create a softlink to it.
