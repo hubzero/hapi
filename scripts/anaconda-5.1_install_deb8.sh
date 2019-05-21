@@ -40,7 +40,7 @@ fi
 
 cd jupyter_notebook_setup
 git pull
-git checkout 5.1
+git checkout ${VERSION}
 cd ..
 
 # if old examples dir exists, create a softlink to it.
@@ -51,11 +51,12 @@ fi
 # checkout example notebooks
 if [[ ! -e ${example_dir} ]] ; then
     git clone https://github.com/hubzero/jupyter_notebook_examples.git ${example_dir}
-else
-    cd ${example_dir}
-    git pull
-    cd ..
 fi
+
+cd ${example_dir}
+git pull
+git checkout ${VERSION}
+cd ..
 
 # now fetch and install binaries
 
