@@ -15,7 +15,7 @@ pkgname=anaconda
 VERSION=5.1
 
 # Where to install.  Should this be different for different OSes?
-basedir=/apps/share64/debian8
+basedir=/apps/share64/debian7
 
 pkginstalldir=${basedir}/${pkgname}
 # install dir for anaconda2
@@ -55,7 +55,7 @@ fi
 
 cd ${example_dir}
 git pull
-git checkout ${VERSION}
+git checkout 23ccb2494a069eff1a1921a8307d18654079d28d
 cd ..
 
 # now fetch and install binaries
