@@ -58,6 +58,14 @@ git pull
 #git checkout 23ccb2494a069eff1a1921a8307d18654079d28d
 cd ..
 
+# Get Install Script
+# This file is very large and can't get checked into the GIT repo.
+if [ ! -f ${basedir}/${pkgname}/Anaconda3-2018.12-Linux-x86_64.sh ]; then
+    wget https://help.hubzero.org/app/site/addons/tools/Anaconda3-2018.12-Linux-x86_64.sh -O ${basedir}/${pkgname}/Anaconda3-2018.12-Linux-x86_64.sh
+    chown apps:apps ${basedir}/${pkgname}/Anaconda3-2018.12-Linux-x86_64.sh
+    chmod 755 ${basedir}/${pkgname}/Anaconda3-2018.12-Linux-x86_64.sh
+fi
+
 # now fetch and install binaries
 
 #    parser.add_argument('--with-py2', action='store_true', help='Install Python2')
@@ -78,4 +86,8 @@ cd ..
 # setup Rprofile.site
 install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir2}/lib/R/etc/Rprofile.site
 install -D --mode 0444 ${installdir}/Rprofile.site.in ${pkginstalldir3}/lib/R/etc/Rprofile.site
+
+# fix permissions
+chown -R apps:apps ${basedir}/${pkgname}/
+chmod -R 755 ${basedir}/${pkgname}/
 
