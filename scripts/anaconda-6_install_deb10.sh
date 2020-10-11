@@ -72,7 +72,7 @@ cd ..
 #                        help='Install the R kernel and packages')
 
 
-./jupyter_notebook_setup/jpkg --with-vnc --with-r --with-dash install ${VERSION}
+./jupyter_notebook_setup/jpkg --with-vnc --with-r --with-dash --envdir=${environdir} install ${VERSION}
 
 
 # setup Rprofile.site
