@@ -112,9 +112,9 @@ cmake .. -DCMAKE_INSTALL_PREFIX=${installprefix} \
 umask 022
 make install
 
-install --mode 755 -D ${hapidir}/rstudio-server-1.4.1717_hubbin_rserverHUB.sh \
+install --mode 755 -D ${hapidir}/rstudio-server-${VERSION}_hubbin_rserverHUB.sh \
                       ${installprefix}/hubbin/rserverHUB.sh
-install --mode 755 -D ${hapidir}/rstudio-server-1.4.1717_hubbin_rstudioUserAuthentication.sh \
+install --mode 755 -D ${hapidir}/rstudio-server-${VERSION}_hubbin_rstudioUserAuthentication.sh \
                       ${installprefix}/hubbin/rstudioUserAuthentication.sh
 
 if [[ ! -d ${environdir} ]] ; then
