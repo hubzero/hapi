@@ -19,6 +19,11 @@ rversion=4.0.5
 source /etc/environ.sh
 use -e -r R-${rversion}
 
+timedatectl 2> /dev/null
+if [ $? -eq 1 ] ; then
+    export TZ=Etc/UTC
+fi
+
 # Fail script on error.
 set -e
 
