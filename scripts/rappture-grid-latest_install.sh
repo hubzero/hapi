@@ -50,5 +50,5 @@ fi
 bash checkout_repos.sh \
     -p ${installprefix} \
     -d rappture_repositories/gridexec \
-    -f "-1 \"--without-cmake --with-expat --with-zlib\" -2 \"--without-htmlwidget --without-itk --without-shape --without-tkimg --without-vornoi\" -3 \"--without-vtk --without-pymol --without-dx\" -r \"--without-ffmpeg --without-vtk\""
+    -f "-1 \"--without-cmake --without-expat --without-zlib\" -2 \"--without-htmlwidget --without-itk --without-shape --without-tkimg --without-vornoi\" -3 \"--without-vtk --without-pymol --without-dx\" -r \"--without-ffmpeg --without-vtk\""
 

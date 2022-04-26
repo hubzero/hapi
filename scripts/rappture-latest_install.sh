@@ -45,9 +45,8 @@ if [[ ! -e ${installscript} ]] ; then
 fi
 
 # run the install script
-bash checkout_repos.sh \
-    -p ${installprefix} \
-    -d rappture_repositories/trunk
+bash checkout_repos.sh -p ${installprefix} \
+                       -d rappture_repositories
 
 
 # don't do anything with environment/use scripts yet
