@@ -133,6 +133,7 @@ location=${pkginstalldir}/\${version}
 
 prepend PATH \${location}/bin/pandoc
 prepend PATH \${location}/bin
+prepend PATH \${location}/hubbin
 
 tags DEVEL
 _END_
