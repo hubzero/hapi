@@ -79,6 +79,7 @@ prepend PATH \${location}/bin
 prepend LD_LIBRARY_PATH \${location}/lib/R/lib
 prepend MANPATH \${location}/share/man
 
+setenv R_LIBS \${location}/lib/R/library
 setenv R_INSTALL_DIR \${location}
 setenv R_LOGO_PATH \${location}/Rlogo-1.png
 

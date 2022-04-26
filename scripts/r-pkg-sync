@@ -62,6 +62,9 @@ do.install <- function(row) {
       } else if (row$source_type == "github") {
         f <- devtools::install_github
         fargs <- list(row$source_details)
+      } else if (row$source_type == "local") {
+        f <- devtools::install_local
+        fargs <- list(row$source_details)
       } else if (row$source_type == "bioclite") {
         f <- devtools::install_bioc
         fargs <- list(row$package_name)
@@ -87,6 +90,7 @@ do.install <- function(row) {
       return(FALSE)
     },
     warning = function(w) {
+      message(w)
       return(FALSE)
     },
     finally = {
@@ -148,6 +152,7 @@ arguments <- parse_args(opt_parser, positional_arguments = 0);
 opt <- arguments$options
 args <- arguments$args
 
-packages.df <- read_csv(opt$packagelist)
+packages.df <- read_csv(opt$packagelist,col_types=cols(.default="c"),na="")
+problems()
 
 status <- install.missing.packages(packages.df)

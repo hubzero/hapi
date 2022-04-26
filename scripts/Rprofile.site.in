@@ -6,6 +6,6 @@ local({
  # r["CRAN"] <- "http://cran.wustl.edu/"
 
  r <- getOption("repos")
- r["CRAN"] <- "http://cran.wustl.edu/"
+ r["CRAN"] <- "https://cran.wustl.edu/"
  options(repos = r)
 })
